@@ -1,0 +1,3 @@
+export const GET_POKEMON = 'GET_POKEMON';
+export const POKEMON_LOADING = 'POKEMON_LOADING';
+export const POKEMON_ERROR = 'POKEMON_ERROR';
