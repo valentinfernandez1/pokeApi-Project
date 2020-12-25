@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
-import { Redirect } from "react-router-dom";
+import history from '../shared/history';
 
 export default class Search extends Component {
 	constructor(props){
@@ -9,16 +9,14 @@ export default class Search extends Component {
 	}
 
 	handleSubmit(event){
-		let searchParam = this.searchParam.value;
-		this.props.getPokemon(searchParam);
 		event.preventDefault();
-		return (<Redirect to={'/search/' + searchParam}/>)
+		history.push('/pokemon/'+ this.searchParam.value);
 	}
 
 	render() {
 		return (
-			<div className='container-fluid mt-5'>
-				<div className='row align-items-center'>
+			<div className='container-fluid mt-5 '>
+				<div className='row'>
 					<div className='col-12'>
 						<h1 className='col-12 text-center text-light mb-4'>PokeApi Pokedex</h1>
 						<img src='pokeballLogo.png' height='50px' className='App-logo mx-auto d-block ' alt='pokeball' />

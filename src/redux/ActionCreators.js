@@ -11,7 +11,23 @@ export const pokemonError = (errMess) => ({
     payload: errMess,
 });
 
-export const getPokemon = (searchParam) => (dispatch) => {
+export const getPokemon = (pokemon) => ({
+    type: ActionTypes.GET_POKEMON,
+    payload: {
+        id: pokemon.id,
+        name: pokemon.name,
+        weight: pokemon.weight,
+        height: pokemon.height,
+        sprites: {
+            defaultSprite: pokemon.sprites.front_default,
+            shinySprite: pokemon.sprites.front_shiny
+        },
+        stats: pokemon.stats,
+        types: pokemon.types
+    }
+});
+
+export const fetchPokemon = (searchParam) => (dispatch) => {
     dispatch(pokemonLoading());
     console.log(searchParam);
     return fetch(baseUrl + 'pokemon/' + searchParam)
@@ -29,7 +45,6 @@ export const getPokemon = (searchParam) => (dispatch) => {
         })
         .then(response => response.json())
         .then(pokemon => {
-            console.log(pokemon);
             return dispatch(getPokemon(pokemon))
         })
         .catch(error => dispatch(pokemonError(error.message)));

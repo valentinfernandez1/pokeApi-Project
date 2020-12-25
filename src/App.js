@@ -1,17 +1,18 @@
 import './App.css';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import Main from './components/MainComponent'
 import { Provider } from 'react-redux';
 import {ConfigureStore} from './redux/configureStore';
+import history from './shared/history';
 
 const store = ConfigureStore();
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <Main />
-      </BrowserRouter>
+      </Router>
     </Provider>
   );
 }

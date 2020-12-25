@@ -5,7 +5,7 @@ import Search from './SearchComponent';
 import Teams from './TeamsComponent';
 import PokemonDetail from './PokemonDetail';
 import { connect } from 'react-redux';
-import { getPokemon } from '../redux/ActionCreators';
+import { fetchPokemon } from '../redux/ActionCreators';
 
 const matchStateToProps = state => {
   return {
@@ -15,19 +15,28 @@ const matchStateToProps = state => {
 }
 
 const matchDispatchToProps = dispatch => ({
-  getPokemon: (searchParam) => dispatch(getPokemon(searchParam)),
+  fetchPokemon: (searchParam) => dispatch(fetchPokemon(searchParam)),
 });
 
 export class Main extends Component {
 
   render() {
+    const PokemonSearched = ({match}) =>{
+      return(
+        <PokemonDetail fetchPokemon={this.props.fetchPokemon} 
+          searchParam={match.params.searchParam}
+          pokemon={this.props.pokemon.pokemon}
+          isLoading={this.props.pokemon.isLoading}
+          errMess={this.props.pokemon.errMess} />
+      );
+    }
 
     return (
       <div>
         <Header />
-        <Switch>
-          <Route path='/search' component={() => <Search getPokemon={this.props.getPokemon} />} />
-          <Route path ='/search/:searchParam' component={<PokemonDetail />} />
+        <Switch className='h-100'>
+          <Route exact path='/search' component={() => <Search />} />
+          <Route path ='/pokemon/:searchParam' component={PokemonSearched} />
           <Route path='/teams' component={() => <Teams />}/>
           <Redirect to='/search' />
         </Switch>
