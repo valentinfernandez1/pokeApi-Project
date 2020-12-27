@@ -1,3 +1,5 @@
 export const GET_POKEMON = 'GET_POKEMON';
 export const POKEMON_LOADING = 'POKEMON_LOADING';
 export const POKEMON_ERROR = 'POKEMON_ERROR';
+export const ADD_ABILITY = 'ADD_ABILITY';
+export const CLEAR_ABILITIES = 'CLEAR_ABILITIES';

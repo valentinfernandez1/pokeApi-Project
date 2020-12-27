@@ -11,25 +11,27 @@ export const pokemonError = (errMess) => ({
     payload: errMess,
 });
 
-export const getPokemon = (pokemon) => ({
-    type: ActionTypes.GET_POKEMON,
-    payload: {
-        id: pokemon.id,
-        name: pokemon.name,
-        weight: pokemon.weight,
-        height: pokemon.height,
-        sprites: {
-            defaultSprite: pokemon.sprites.front_default,
-            shinySprite: pokemon.sprites.front_shiny
-        },
-        stats: pokemon.stats,
-        types: pokemon.types
-    }
-});
+export const getPokemon = (pokemon) => {
+    return {
+        type: ActionTypes.GET_POKEMON,
+        payload: {
+            id: pokemon.id,
+            name: pokemon.name,
+            weight: ''+ (pokemon.weight/10) + ' kg',
+			height: ''+(pokemon.height / 10)+' m',
+			abilities: pokemon.abilities,
+            sprites: {
+                defaultSprite: pokemon.sprites.front_default,
+                shinySprite: pokemon.sprites.front_shiny
+            },
+            stats: pokemon.stats,
+            types: pokemon.types
+		}
+	}
+};
 
 export const fetchPokemon = (searchParam) => (dispatch) => {
     dispatch(pokemonLoading());
-    console.log(searchParam);
     return fetch(baseUrl + 'pokemon/' + searchParam)
         .then(response => {
             if(response.ok){
@@ -45,7 +47,51 @@ export const fetchPokemon = (searchParam) => (dispatch) => {
         })
         .then(response => response.json())
         .then(pokemon => {
-            return dispatch(getPokemon(pokemon))
+            dispatch(getPokemon(pokemon));
+            return pokemon;
+            }
+        )
+        .then(response => {
+            console.log(response);
+            response.abilities.map((ability)=>dispatch(fetchAbility(ability)));
+            return response;
         })
-        .catch(error => dispatch(pokemonError(error.message)));
+        .catch(error => dispatch(pokemonError(error.message)))
+        
+}
+
+export const fetchAbility = (ability) => (dispatch) => {
+        dispatch(clearAbilities());
+		return fetch(baseUrl + 'ability/' + ability.ability.name)
+			.then(response => {
+				if(response.ok){
+					return response;
+				}else{
+					let error = new Error('Error ' + response.status + ': ' + response.statusText);
+					error.response = response;
+					throw error;
+				}
+			}, error => {
+				let errMess = new Error(error.message);
+				throw errMess; 
+			})
+			.then(response => response.json())
+			.then(response => dispatch(addAbility(response)))
+			.catch(error => error.message);
+}
+
+export const addAbility = (ability) => {
+	return {
+		type: ActionTypes.ADD_ABILITY,
+		payload: {
+			name: ability.name,
+			description: ability.effect_entries[1].effect
+		}
+	}
+}
+
+export const clearAbilities = () => {
+    return {
+        type: ActionTypes.CLEAR_ABILITIES,
+    }
 }

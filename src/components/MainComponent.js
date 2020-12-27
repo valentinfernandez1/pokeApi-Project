@@ -5,7 +5,7 @@ import Search from './SearchComponent';
 import Teams from './TeamsComponent';
 import PokemonDetail from './PokemonDetail';
 import { connect } from 'react-redux';
-import { fetchPokemon } from '../redux/ActionCreators';
+import { fetchPokemon, fetchAbility } from '../redux/ActionCreators';
 
 const matchStateToProps = state => {
   return {
@@ -26,6 +26,7 @@ export class Main extends Component {
         <PokemonDetail fetchPokemon={this.props.fetchPokemon} 
           searchParam={match.params.searchParam}
           pokemon={this.props.pokemon.pokemon}
+          abilities={this.props.pokemon.abilities}
           isLoading={this.props.pokemon.isLoading}
           errMess={this.props.pokemon.errMess} />
       );
