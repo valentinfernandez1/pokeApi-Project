@@ -25,7 +25,7 @@ export const getPokemon = (pokemon) => {
                 shinySprite: pokemon.sprites.front_shiny
             },
             stats: pokemon.stats,
-            types: pokemon.types
+            types: pokemon.types    
 		}
 	}
 };
@@ -46,16 +46,19 @@ export const fetchPokemon = (searchParam) => (dispatch) => {
             throw errMess; 
         })
         .then(response => response.json())
+        .then(response => {
+            dispatch(fetchSpecies(response.id));
+            return response;
+        })
+        .then(response => {
+            response.abilities.map((ability)=>dispatch(fetchAbility(ability)));
+            return response;
+        })
         .then(pokemon => {
             dispatch(getPokemon(pokemon));
             return pokemon;
             }
         )
-        .then(response => {
-            console.log(response);
-            response.abilities.map((ability)=>dispatch(fetchAbility(ability)));
-            return response;
-        })
         .catch(error => dispatch(pokemonError(error.message)))
         
 }
@@ -93,5 +96,42 @@ export const addAbility = (ability) => {
 export const clearAbilities = () => {
     return {
         type: ActionTypes.CLEAR_ABILITIES,
+    }
+}
+
+export const fetchSpecies = (pkId) => (dispatch) => {
+    dispatch(clearSpecies());
+    return fetch(baseUrl + 'pokemon-species/' + pkId)
+        .then(response => {
+            if(response.ok){
+                return response;
+            }else{
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            let errMess = new Error(error.message);
+            throw errMess; 
+        })
+        .then(response => response.json())
+        .then(response => dispatch(getSpecies(response)))
+        .catch(error => error.message);
+}
+
+export const getSpecies = (species) => {
+	return {
+		type: ActionTypes.GET_POKEMON_SPECIES,
+		payload: {
+			forms: species.varieties,
+            evoChain: species.evolution_chain,
+            pkDescriptions: species.flavor_text_entries
+		}
+	}
+}
+
+export const clearSpecies = () => {
+    return {
+        type: ActionTypes.CLEAR_SPECIES,
     }
 }

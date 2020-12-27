@@ -12,17 +12,6 @@ const statAverage = (stat, statName) => {
 		default: return statBarColor(stat, 70.85);
 	}
 }
-const giveKey = (statName) => {
-	switch (statName){
-		case 'hp': return 0;
-		case 'attack': return 1;
-		case 'defense': return 2;
-		case 'special-attack': return 3;
-		case 'special-defense': return 4;
-		case 'speed': return 5;
-		default: return 6;
-	}
-}
 
 const statBarColor = (stat, statAverage) => {
 	if (stat <= statAverage * 0.75){
@@ -45,7 +34,7 @@ function PokemonStats({isLoading, errMess, pokemon}){
 		statList = statList.map((statItem) => {
 			statCount = statCount + statItem[1].base_stat
 			return(
-				<div key={giveKey(statItem[1].stat.name)} className='row'>
+				<div key={statList.indexOf(statItem)} className='row'>
 					<div className='col-12 col-sm-3'>
 						<h6 className='text-sm-right text-capitalize'>{statItem[1].stat.name}</h6>
 					</div>
@@ -65,6 +54,20 @@ function PokemonStats({isLoading, errMess, pokemon}){
 					<CardTitle><h3>Pokemon Base Stats</h3></CardTitle>
 					<hr/>
 					{statList}
+					<div className='row justify-content-center mt-3'>
+						<div className='col-3 col-sm-2 '>
+							<div className='bg-danger rounded-pill py-1 text-center'>Bad</div>
+						</div>
+						<div className='col-3 col-sm-2'>
+							<div className='bg-primary rounded-pill py-1 text-center'>Avg</div>
+						</div>
+						<div className='col-3 col-sm-2'>
+							<div className='bg-success rounded-pill py-1 text-center'>Good</div>
+						</div>
+						<div className='col-3 col-sm-2'>
+							<div className='bg-warning rounded-pill py-1 text-center'>Great</div>
+						</div>
+					</div>
 					<hr/>
 					<h5 className='text-center'>Total Base Stats: {statCount} </h5>
 				</CardBody>

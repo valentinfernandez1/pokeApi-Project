@@ -3,14 +3,23 @@ import { Component } from 'react';
 import {Badge, Button, Card, CardBody, CardText, CardTitle } from 'reactstrap'
 import { Loading } from '../LoadingComponent';
 
+const randomDescription = (descriptions) => {
+	if(descriptions != null){
+		let engDescriptions = descriptions.pkDescriptions.filter((description) => description.language.name === "en");
+		let randomDescription = Math.floor(Math.random()*engDescriptions.length);
+		return engDescriptions[randomDescription].flavor_text;
+	}
+}
 
 class RenderPokemon extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			shinyButton: 'Shiny'
+			shinyButton: 'Shiny',
+			description: randomDescription(this.props.pkSpecies)
 		}
 		this.handleShinyButton = this.handleShinyButton.bind(this);
+		this.handleDescriptionButton = this.handleDescriptionButton.bind(this);
 	}
 
 	handleShinyButton(){
@@ -21,6 +30,10 @@ class RenderPokemon extends Component{
 			document.getElementById('pokemon-image').src=this.props.pokemon.sprites.defaultSprite;
 			this.setState({shinyButton: 'Shiny'});
 		}
+	}
+
+	handleDescriptionButton(){
+		this.setState({description: randomDescription(this.props.pkSpecies)})
 	}
 
 
@@ -40,7 +53,7 @@ class RenderPokemon extends Component{
 			const typesBlock = this.props.pokemon.types.map((type) => {
 				let typeSrc= '/types/'+type.type.name+'.png';
 				return (
-					<img src={`${process.env.PUBLIC_URL}${typeSrc}`} height='25px' alt='pokeball' />
+					<img key={this.props.pokemon.types.indexOf(type)} src={`${process.env.PUBLIC_URL}${typeSrc}`} className='mx-1' height='25px' alt='pokeball' />
 				);
 			});
 
@@ -58,7 +71,12 @@ class RenderPokemon extends Component{
 							<h6 className='col-4 col-sm-2 p-1 text-light rounded bg-primary '>{this.props.pokemon.weight}</h6>
 						</div>
 						<Button onClick={this.handleShinyButton} color="warning my-2" id='shiny-button'>{this.state.shinyButton}</Button>{' '}
-						<CardText>Esto es un texto de prueba, aqui ira una descripcion del pokemon</CardText>
+						<hr/>
+						<h5 className='text-left text-primary'>
+							Pokemon Description
+						</h5>
+						<CardText>{this.state.description}</CardText>
+						<Button onClick={this.handleDescriptionButton} color="success ml-2">Change Description</Button>
 					</CardBody>
 				</Card>
 			);

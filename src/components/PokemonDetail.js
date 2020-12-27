@@ -17,7 +17,6 @@ class PokemonDetail extends Component{
 	}
 
 	render(){
-		
 		return(
 			<div className='container-fluid mt-5 pl-sm-5 pr-sm-5'>
 				<div className='row h-100'>
@@ -25,7 +24,8 @@ class PokemonDetail extends Component{
 						<RenderPokemon 
 							isLoading={this.props.isLoading}
 							errMess={this.props.errMess}
-							pokemon={this.props.pokemon}/>
+							pokemon={this.props.pokemon}
+							pkSpecies={this.props.pkSpecies}/>
 					</div>
 					<div className='col-12 col-sm-6'>
 						<div className='row'>
@@ -35,14 +35,14 @@ class PokemonDetail extends Component{
 										errMess={this.props.errMess}
 										pokemon={this.props.pokemon} />
 							</div>
-							<div className='row mx-1'>
-								<div className='mt-3 col-12'>
-									<PokemonAbilities 
-											isLoading={this.props.isLoading}
-											errMess={this.props.errMess}
-											pokemon={this.props.pokemon}
-											abilities={this.props.abilities} />
-								</div>
+						</div>
+						<div className='row '>
+							<div className='mt-3 col-12'>
+								<PokemonAbilities 
+									isLoading={this.props.isLoading}
+									errMess={this.props.errMess}
+									pokemon={this.props.pokemon}
+									abilities={this.props.abilities} />
 							</div>
 						</div>
 					</div>

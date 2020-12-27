@@ -9,12 +9,11 @@ class PokemonAbilities extends Component{
     }else{
       const abilityList = this.props.abilities.map((ability)=>{
         return (
-          <>
+          <div key={this.props.abilities.indexOf(ability)}>
             <hr/>
             <h5 className='text-center text-capitalize text-primary'>{ability.name}</h5>
             <h6 className=' text-secondary'>{ability.description}</h6>
-            
-          </>
+          </div>
         );
       });
 

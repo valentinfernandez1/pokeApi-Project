@@ -5,7 +5,8 @@ export const Pokemon = (state = {
     errMess: null,
     pokemon: null,
     abilities: [],
-    pkDescriptions: []
+    pkSpecies: null,
+    evoChain: []
     }, action) => {
     switch(action.type){
         case ActionTypes.GET_POKEMON:
@@ -18,6 +19,10 @@ export const Pokemon = (state = {
             return {...state, abilities: state.abilities.concat(action.payload)}
         case ActionTypes.CLEAR_ABILITIES:
             return {...state, abilities: []}
+        case ActionTypes.GET_POKEMON_SPECIES:
+            return {...state, pkSpecies: action.payload}
+        case ActionTypes.CLEAR_SPECIES:
+            return {...state, pkSpecies: null}
         default:
             return state;
     }
