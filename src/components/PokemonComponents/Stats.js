@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Progress } from "reactstrap";
+import {formatStrings} from './Pokemon';
 
 const statAverage = (stat, statName) => {
 	switch (statName){
@@ -36,7 +37,7 @@ function PokemonStats({isLoading, errMess, pokemon}){
 			return(
 				<div key={statList.indexOf(statItem)} className='row'>
 					<div className='col-12 col-sm-3'>
-						<h6 className='text-sm-right text-capitalize'>{statItem[1].stat.name}</h6>
+						<h6 className='text-sm-right text-capitalize'>{formatStrings(statItem[1].stat.name)}</h6>
 					</div>
 					<div className='col-8 col-sm-7'>
 						<Progress color={statAverage(statItem[1].base_stat, statItem[1].stat.name)} value={(statItem[1].base_stat/255)*100} />

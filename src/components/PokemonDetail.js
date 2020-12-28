@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import RenderPokemon from './PokemonComponents/Pokemon'
 import PokemonStats from './PokemonComponents/Stats'
 import PokemonAbilities from './PokemonComponents/PokemonAbilities'
+import EvoChain from './PokemonComponents/EvoChain';
 
 const lowerCaseFirstLetter = (string) => string.charAt(0).toLowerCase() + string.slice(1);
 
@@ -45,6 +46,14 @@ class PokemonDetail extends Component{
 									abilities={this.props.abilities} />
 							</div>
 						</div>
+					</div>
+				</div>
+				<div className='row mt-3'>
+					<div className='col-12'>
+						<EvoChain 
+							isLoading={this.props.isLoading}
+							errMess={this.props.errMess}
+							pokemon={this.props.pokemon}/>
 					</div>
 				</div>
 			</div>
