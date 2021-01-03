@@ -19,7 +19,7 @@ class PokemonAbilities extends Component{
       });
 
       return (
-        <Card>
+        <Card className='mt-sm-2'>
           <CardBody>
             <CardTitle><h3>Pokemon Abilities</h3></CardTitle>
             {abilityList}

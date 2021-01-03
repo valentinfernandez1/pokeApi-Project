@@ -11,7 +11,7 @@ let lastSearchParam = null;
 class PokemonDetail extends Component{
 
 	componentDidMount(){
-		if (lastSearchParam == null || lastSearchParam != this.props.searchParam){
+		if (lastSearchParam == null || lastSearchParam !== this.props.searchParam){
 			lastSearchParam = this.props.searchParam;
 			this.props.fetchPokemon(lowerCaseFirstLetter(this.props.searchParam));
 		}
@@ -19,14 +19,16 @@ class PokemonDetail extends Component{
 
 	render(){
 		return(
-			<div className='container-fluid mt-5 pl-sm-5 pr-sm-5'>
+			<div className='container-fluid mt-4 pl-sm-5 pr-sm-5'>
 				<div className='row h-100'>
 					<div align='center' className='col-12 col-sm-6'>
 						<RenderPokemon 
 							isLoading={this.props.isLoading}
 							errMess={this.props.errMess}
 							pokemon={this.props.pokemon}
-							pkSpecies={this.props.pkSpecies}/>
+							putTeam={this.props.putTeam}
+							pkSpecies={this.props.pkSpecies}
+							teams={this.props.teams}/>
 					</div>
 					<div className='col-12 col-sm-6'>
 						<div className='row'>

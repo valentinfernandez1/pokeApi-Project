@@ -30,20 +30,17 @@ function PokemonStats({isLoading, errMess, pokemon}){
   if (isLoading || errMess != null){
 		return (<div></div>);
 	}else{
-		let statList = Object.entries(pokemon.stats);
+		let statList = pokemon.stats;
 		let statCount = 0;
 		statList = statList.map((statItem) => {
-			statCount = statCount + statItem[1].base_stat
+			statCount = statCount + statItem.base_stat
 			return(
 				<div key={statList.indexOf(statItem)} className='row'>
-					<div className='col-12 col-sm-3'>
-						<h6 className='text-sm-right text-capitalize'>{formatStrings(statItem[1].stat.name)}</h6>
+					<div className='col-12'>
+						<h6 className='mt-1 text-capitalize'>{formatStrings(statItem.stat.name)}</h6>
 					</div>
-					<div className='col-8 col-sm-7'>
-						<Progress color={statAverage(statItem[1].base_stat, statItem[1].stat.name)} value={(statItem[1].base_stat/255)*100} />
-					</div>
-					<div className='col-4 col-sm-2'>
-						<h6>{statItem[1].base_stat}/255</h6>
+					<div className='col-12'>
+						<Progress color={statAverage(statItem.base_stat, statItem.stat.name)} value={(statItem.base_stat/255)*100}>{statItem.base_stat}</Progress>
 					</div>
 				</div>
 			);
@@ -56,17 +53,17 @@ function PokemonStats({isLoading, errMess, pokemon}){
 					<hr/>
 					{statList}
 					<div className='row justify-content-center mt-3'>
-						<div className='col-3 col-sm-2 '>
-							<div className='bg-danger rounded-pill py-1 text-center'>Bad</div>
+						<div className='col-5 my-1 my-sm-0 col-sm-3 '>
+							<div className='bg-danger rounded-pill py-1 px-1 text-center'>Bad</div>
 						</div>
-						<div className='col-3 col-sm-2'>
-							<div className='bg-primary rounded-pill py-1 text-center'>Avg</div>
+						<div className='col-5 col-sm-3'>
+							<div className='bg-primary rounded-pill py-1 px-1 text-center'>Avg</div>
 						</div>
-						<div className='col-3 col-sm-2'>
-							<div className='bg-success rounded-pill py-1 text-center'>Good</div>
+						<div className='col-5 col-sm-3'>
+							<div className='bg-success rounded-pill py-1 px-1 text-center'>Good</div>
 						</div>
-						<div className='col-3 col-sm-2'>
-							<div className='bg-warning rounded-pill py-1 text-center'>Great</div>
+						<div className='col-5 col-sm-3'>
+							<div className='bg-warning rounded-pill py-1 px-1 text-center'>Great</div>
 						</div>
 					</div>
 					<hr/>

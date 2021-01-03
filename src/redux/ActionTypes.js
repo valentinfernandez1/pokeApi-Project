@@ -7,3 +7,11 @@ export const CLEAR_ABILITIES = 'CLEAR_ABILITIES';
 
 export const GET_POKEMON_SPECIES = 'GET_POKEMON_SPECIES';
 export const CLEAR_SPECIES = 'CLEAR_SPECIES';
+
+export const ADD_TEAMS = 'ADD_TEAMS';
+export const TEAMS_LOADING = 'TEAMS_LOADING';
+export const TEAMS_ERROR = 'TEAMS_ERROR';
+export const REMOVE_TEAM = 'REMOVE_TEAM';
+export const UPDATE_TEAM = 'UPDATE_TEAM';
+export const CREATE_TEAM = 'CREATE_TEAM';
+

@@ -2,6 +2,7 @@ import * as ActionTypes from './ActionTypes';
 
 const baseUrl = 'https://pokeapi.co/api/v2/';
 
+
 export const pokemonLoading = () => ({
     type: ActionTypes.POKEMON_LOADING,
 });
@@ -135,3 +136,4 @@ export const clearSpecies = () => {
         type: ActionTypes.CLEAR_SPECIES,
     }
 }
+

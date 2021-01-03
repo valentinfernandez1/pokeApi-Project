@@ -7,10 +7,11 @@ export default class EvoChain extends Component {
       return (<div></div>);
     }else{
       return (
-        <Card>
+        <Card className='mt-sm-3'>
           <CardBody>
             <CardTitle>Evolutions</CardTitle>
             <hr/>
+            <h5>In Development</h5>
           </CardBody>
         </Card>
       );
