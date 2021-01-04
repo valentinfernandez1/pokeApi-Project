@@ -15,14 +15,15 @@ export const Teams = (state = {
 			return {...state, isLoading: false, errMess: action.payload, teams: null}
 
 		case ActionTypes.REMOVE_TEAM:
-			return {state, teams: state.teams.filter((team) => team.id !== action.payload)}
+			return {...state, teams: state.teams.filter((team) => team.id !== action.payload)}
 
 		case ActionTypes.UPDATE_TEAM:
 			let newTeams= state.teams;
-			newTeams[action.payload.id] = action.payload.team;
-			return{state, teams: newTeams}
+			newTeams[(action.payload.id)] = action.payload.team;
+			return{...state, teams: newTeams}
 
 			case ActionTypes.CREATE_TEAM:
+				console.log(action.payload)
 				return {...state, teams: state.teams.concat(action.payload)}
 
 		default:

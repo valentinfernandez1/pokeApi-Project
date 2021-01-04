@@ -65,7 +65,7 @@ export const removeTeam = (teamId) => ({
   }
 );
 
-export const putTeam = (teamId, newTeam) => dispatch => {
+export const putTeam = (teamId, newTeam, storeId) => dispatch => {
   return fetch(teamsUrl + '/' + teamId, {
     method: 'PUT',
     body: JSON.stringify(newTeam),
@@ -88,7 +88,7 @@ export const putTeam = (teamId, newTeam) => dispatch => {
   .then(response => response.json())
   .then(response => {
     console.log(response);
-    dispatch(updateTeam(teamId,newTeam));
+    dispatch(updateTeam(storeId, newTeam));
   })
   .catch(error => console.log('Put FeedBack', error.message));
 }
@@ -102,7 +102,7 @@ export const updateTeam = (teamId, newTeam) => ({
 });
 
 
-export const createTeam = (teamName, newTeamId) => dispatch => {
+export const createTeam = (teamName, storeTeamId) => dispatch => {
   const newTeam = {
     name: teamName,
     teamMember: []
@@ -127,14 +127,14 @@ export const createTeam = (teamName, newTeamId) => dispatch => {
     let errMess = new Error(error.message);
     throw errMess;
   })
-  .then(() => dispatch(postNewTeam(teamName, newTeamId)))
+  .then(() => {console.log(storeTeamId);dispatch(postNewTeam(teamName, storeTeamId))})
   .catch(error => alert('The team could not be created: ' + error.message));
 }
 
-export const postNewTeam = (teamName, newTeamId) => ({
+export const postNewTeam = (teamName, storeTeamId) => ({
   type: ActionTypes.CREATE_TEAM,
   payload: {
-    id: newTeamId,
+    id: storeTeamId,
     name: teamName,
     teamMember: []
   }

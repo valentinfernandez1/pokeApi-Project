@@ -22,7 +22,7 @@ const matchDispatchToProps = dispatch => ({
   getTeams: () => dispatch(getTeams),
   deleteTeam: (teamId) => dispatch(deleteTeam(teamId)),
   putTeam: (teamId, newTeam) => dispatch(putTeam(teamId, newTeam)),
-  createTeam: (teamName) => dispatch(createTeam(teamName))
+  createTeam: (teamName,storeTeamId) => dispatch(createTeam(teamName, storeTeamId))
 });
 
 export class Main extends Component {
@@ -52,7 +52,8 @@ export class Main extends Component {
       }else{
         return <TeamDetail teamSerched={this.props.teams.teams.filter((t) => t.id===parseInt(match.params.teamId))[0]}
           errMess={this.props.teams.errMess}
-          putTeam={this.props.putTeam} />
+          putTeam={this.props.putTeam}
+          teams = {this.props.teams.teams}  />
       }
     }
 
@@ -61,7 +62,7 @@ export class Main extends Component {
         <Header />
         <Switch className='h-100'>
           <Route exact path='/search' component={() => <Search />} />
-          <Route path ='/pokemon/:searchParam' component={PokemonSearched} />
+          <Route path ='/search/:searchParam' component={PokemonSearched} />
           <Route path='/teams/:teamId' component={teamSelected} />
           <Route exact path='/teams' component={() => <Teams 
             isLoading={this.props.teams.isLoading}

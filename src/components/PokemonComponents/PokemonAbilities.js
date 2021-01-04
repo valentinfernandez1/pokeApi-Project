@@ -36,9 +36,6 @@ const PokemonAbilities = (props) => {
             </Col>
           </Row>         
         </TabPane>   
-          
-            
-
       );
     });
 

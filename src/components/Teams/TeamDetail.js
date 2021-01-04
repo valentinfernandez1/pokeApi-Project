@@ -27,7 +27,7 @@ export default class TeamDetail extends Component {
                 <div className='row justify-content-between'>
                   <h3 className='text-capitalize'>{teamMember.name+' '}<Badge color="danger">N°{teamMember.pkId}</Badge></h3>
                   <Button className='justify-self-center' outline color='danger'
-                    onClick={() => this.props.putTeam(this.props.teamSerched.id, defineTeam(this.props.teamSerched, teamMember.id))}>
+                    onClick={() => this.props.putTeam(this.props.teamSerched.id, defineTeam(this.props.teamSerched, teamMember.id), this.props.teams.indexOf(this.props.teamSerched))}>
                     Delete
                   </Button>
                 </div>

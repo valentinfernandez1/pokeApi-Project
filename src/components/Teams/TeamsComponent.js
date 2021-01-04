@@ -50,6 +50,7 @@ const RenderTeam = ({team,deleteTeam}) => {
 	);
 }
 
+
 export default class Teams extends Component {
 	constructor(props){
 		super(props);
@@ -64,9 +65,10 @@ export default class Teams extends Component {
 		this.setState({isModalOpen: !this.state.isModalOpen});
 	}
 
-	createTeam(event){
+	createTeam = (lastTeamId) => (event) => {
+		console.log(lastTeamId);
+		this.props.createTeam(this.teamName.value, lastTeamId+1);
 		event.preventDefault();
-		this.props.createTeam(this.teamName.value, this.props.teams.length);
 	}
 
   render() {
@@ -83,6 +85,9 @@ export default class Teams extends Component {
 					</div>
 				);
 			});
+
+			let lastTeamId=0;
+			if(this.props.teams[0]){lastTeamId = this.props.teams[(this.props.teams.length)-1].id;}
 
 			return (
 				<>
@@ -102,7 +107,7 @@ export default class Teams extends Component {
 				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleAddTeam}>
 					<ModalHeader toggle={this.toggleAddTeam}>Create New Team</ModalHeader>
 					<ModalBody>
-					<Form onSubmit={this.createTeam} className='col-12'>
+					<Form onSubmit={this.createTeam(lastTeamId)} className='col-12'>
 						<FormGroup>
 							<div className='row'>
 								<Label for='teamName' className='col-11'>

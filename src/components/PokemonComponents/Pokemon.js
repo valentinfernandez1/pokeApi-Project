@@ -77,7 +77,7 @@ class RenderPokemon extends Component{
 			let result = teamList.map((team)=>(
 				<div className='row justify-content-center'>
 					<Button outline color="primary" className='col-10 pl-2 mb-2 pt-1'
-						onClick={() => this.props.putTeam(team.id, defineTeam(team, this.props.pokemon)) }>
+						onClick={() => this.props.putTeam(team.id, defineTeam(team, this.props.pokemon), this.props.teams.indexOf(team)) }>
 						<h5 className='pt-1'>{team.name}</h5>
 					</Button>
 				</div>
@@ -91,7 +91,7 @@ class RenderPokemon extends Component{
 		this.setState({description: randomDescription(this.props.pkSpecies)})
 	}
 
-	changePokemon = (value, pkId) => value === 'Next'? history.push('/pokemon/'+ (pkId+1)) : history.push('/pokemon/'+ (pkId-1))
+	changePokemon = (value, pkId) => value === 'Next'? history.push('/search/'+ (pkId+1)) : history.push('/search/'+ (pkId-1))
 
 	render(){
 		if (this.props.isLoading){

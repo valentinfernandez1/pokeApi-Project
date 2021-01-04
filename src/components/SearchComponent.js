@@ -10,7 +10,7 @@ export default class Search extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		history.push('/pokemon/'+ this.searchParam.value);
+		history.push('/search/'+ this.searchParam.value);
 	}
 
 	render() {
