@@ -1,32 +1,60 @@
-import { Component } from "react";
-import { Card, CardBody, CardTitle } from "reactstrap";
+import React, { useState } from 'react';
+import { Card, CardBody, CardTitle, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import {formatStrings} from './Pokemon';
+import classnames from 'classnames';
 
-class PokemonAbilities extends Component{
+const PokemonAbilities = (props) => {
+  const [activeTab, setActiveTab] = useState('1');
 
-  render(){
-    if (this.props.isLoading || this.props.errMess != null){
-      return (<div></div>);
-    }else{
-      const abilityList = this.props.abilities.map((ability)=>{
-        return (
-          <div key={this.props.abilities.indexOf(ability)}>
-            <hr/>
-            <h5 className='text-center text-capitalize text-primary'>{formatStrings(ability.name)}</h5>
-            <h6 className=' text-secondary'>{ability.description}</h6>
-          </div>
-        );
-      });
+  const toggle = tab => {
+    if(activeTab !== tab) setActiveTab(tab);
+  }
 
+  if (props.isLoading || props.errMess != null){
+    return (<div></div>);
+  }else{
+
+    const abilityTabs = props.abilities.map((ability)=>{
+      let tabNumber = props.abilities.indexOf(ability)+1;
       return (
-        <Card className='mt-sm-2'>
-          <CardBody>
-            <CardTitle><h3>Pokemon Abilities</h3></CardTitle>
-            {abilityList}
-          </CardBody>
-        </Card>
+        <NavItem>
+          <NavLink className={classnames({ active: activeTab === tabNumber})}
+            onClick={() => { toggle(tabNumber); }}>
+            <h6 className='text-capitalize'>{formatStrings(ability.name)}</h6>
+          </NavLink>
+        </NavItem>
       );
-    }
+    });
+
+    const abilityContent = props.abilities.map((ability)=>{
+      let tabNumber = props.abilities.indexOf(ability)+1;
+      return (
+        <TabPane tabId={tabNumber}>
+           <Row>
+            <Col sm="12">
+              <h6 className='text-secondary mt-2'>{formatStrings(ability.description)}</h6>
+            </Col>
+          </Row>         
+        </TabPane>   
+          
+            
+
+      );
+    });
+
+    return (
+      <Card className='mt-sm-2'>
+        <CardBody>
+          <CardTitle><h3>Pokemon Abilities</h3></CardTitle>
+          <Nav tabs>
+            {abilityTabs}
+          </Nav>
+          <TabContent activeTab={activeTab}>
+            {abilityContent}
+          </TabContent>
+        </CardBody>
+      </Card>
+    );
   }
 }
 export default PokemonAbilities;
